@@ -29,6 +29,7 @@ public class sr2 {
     private static final String USER = "pkihiki";  //имя пользователя
     private static final String PASSWORD = "12345678"; //пароль
     private static final String TABLE_NAME = "logins";
+    private int counUser=0;
 
     public void start(int port) throws IOException {
         try(ServerSocket serverSocket = new ServerSocket(port)){
@@ -47,7 +48,7 @@ public class sr2 {
 //        serverSocket.close();
 //    }
 
-    private static class EchoClientHandler extends Thread {
+    private class EchoClientHandler extends Thread {
         private Socket clientSocket;
         private PrintWriter out;
         private BufferedReader in;
@@ -59,9 +60,9 @@ public class sr2 {
 
         public void run() {
             try {
-            out = new PrintWriter(clientSocket.getOutputStream(), true);
-            in = new BufferedReader(
-                    new InputStreamReader(clientSocket.getInputStream()));
+                out = new PrintWriter(clientSocket.getOutputStream(), true);
+                in = new BufferedReader(
+                        new InputStreamReader(clientSocket.getInputStream()));
 
 //            String inputLine;
 //            while ((inputLine = in.readLine()) != null) {
@@ -107,6 +108,7 @@ public class sr2 {
                         System.out.println("77777");
                         try {
                             if(login(login,pass)){
+                                counUser = counUser + 1;
                                 out.println("1");
                             }
                             else {
@@ -131,21 +133,25 @@ public class sr2 {
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
                         }
+                    } else if (request.startsWith("up")) {
+                        out.println(counUser);
+                        DataOutputStream out1 = new DataOutputStream(clientSocket.getOutputStream());
+                        File jsonFile = new File("response.json");
+                        sendFile(jsonFile, out1);
                     }
                 }
                 System.out.println("Клиент отключон:00000000 " + clientSocket.getInetAddress());
-            in.close();
-            out.close();
-            clientSocket.close();
+                in.close();
+                out.close();
+                clientSocket.close();
                 System.out.println("end");
-//            synchronized (sr2.class) {
-//                    clientCount--;
-//            }
             } catch (IOException e) {
                 try {
+                    counUser--;
                     in.close();
                     out.close();
                     clientSocket.close();
+
                 } catch (IOException ex) {
                     System.out.println("eror");
                 }
@@ -222,7 +228,7 @@ public class sr2 {
         }
         else {
             System.out.println("Логин '" + login + "' не существует.");
-        return false;}
+            return false;}
     }
     private static boolean reg(String login,String pass) throws SQLException {
         Connection connection = DriverManager.getConnection(DB_URL + DB_NAME, USER, PASSWORD);
