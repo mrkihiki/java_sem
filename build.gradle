@@ -17,6 +17,7 @@ ext {
   junitVersion = '5.10.2'
 }
 
+
 sourceCompatibility = '21'
 targetCompatibility = '21'
 
@@ -45,6 +46,10 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
   implementation 'mysql:mysql-connector-java:8.0.33'
+
+  implementation("org.springframework.boot:spring-boot:3.4.1")
+  implementation("org.springframework.boot:spring-boot-autoconfigure:3.4.1")
+  implementation("org.yaml:snakeyaml:2.3")
 }
 
 test {

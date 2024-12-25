@@ -3,6 +3,7 @@ package org.example.java_sem;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -18,7 +19,16 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+
+
 public class sr2 {
+    @Value("${server.port}")
+    private String por;
     //private ServerSocket serverSocket;
     private static int clientCount = 0;
     private static List<Message> messageHistory = new ArrayList<>();
@@ -83,7 +93,7 @@ public class sr2 {
                     if (request.startsWith("input")) {
                         userName=in.readLine();
                         System.out.println("Клиент подключен: " +userName+ clientSocket.getInetAddress());
-                        System.out.println(request);
+                        //System.out.println(request);
                         DataOutputStream out1 = new DataOutputStream(clientSocket.getOutputStream());
                         File jsonFile = new File("response.json");
                         sendFile(jsonFile, out1);
@@ -105,7 +115,7 @@ public class sr2 {
                     else if(request.startsWith("login")){
                         String login=in.readLine();
                         String pass=in.readLine();
-                        System.out.println("77777");
+                        //System.out.println("77777");
                         try {
                             if(login(login,pass)){
                                 counUser = counUser + 1;
@@ -161,13 +171,20 @@ public class sr2 {
     }
     public static void main(String[] args) throws IOException {
         sr2 server = new sr2();
-        server.start(12345);
+        System.out.println("=========");
+        ApplicationContext context = SpringApplication.run(sr2.class, args);
+        //sr2 app = context.getBean(sr2.class);
+        //int x= ServerPort.getPort();
+        //int port = app.serverProperties.getPort();
+        //ApplicationContext context = SpringApplication.run(sr2.class, args);
+        int port = context.getEnvironment().getProperty("server.port", Integer.class);
+        server.start(port);
     }
     private static void sendFile(File file, DataOutputStream out) throws IOException {
         // Отправляем размер файла
-        System.out.println("11");
+//        System.out.println("11");
         out.writeLong(file.length());
-        System.out.println("22");
+//        System.out.println("22");
         // Отправляем файл
         try (FileInputStream fileInputStream = new FileInputStream(file)) {
             byte[] buffer = new byte[4096];
@@ -209,7 +226,7 @@ public class sr2 {
             if (resultSet.next()) {
                 password = resultSet.getString("pass");
                 chValue = resultSet.getString("ch");
-                System.out.println("Pass: " + password + ", Ch: " + chValue);
+//                System.out.println("Pass: " + password + ", Ch: " + chValue);
                 byte[] convertedBytes = chValue.getBytes(StandardCharsets.UTF_8);
                 MessageDigest md = null;
                 try {
@@ -220,7 +237,7 @@ public class sr2 {
                 md.update(convertedBytes);
                 byte[] hashedPassword = md.digest(pass.getBytes());
                 passH = Base64.getEncoder().encodeToString(hashedPassword);
-                System.out.println(passH);
+//                System.out.println(passH);
             }if(passH.equals(password)){
                 return true;
             }
@@ -254,8 +271,8 @@ public class sr2 {
                 throw new RuntimeException(e);
             }
             String ch=new String(salt, StandardCharsets.UTF_8);
-            System.out.println("----------");
-            System.out.println(ch);
+            //System.out.println("----------");
+            //System.out.println(ch);
             byte[] convertedBytes = ch.getBytes(StandardCharsets.UTF_8);
             md.update(convertedBytes); // Добавляем соль к хешу
             byte[] hashedPassword = md.digest(pass.getBytes());
@@ -266,7 +283,7 @@ public class sr2 {
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, passCH);
             preparedStatement.setString(3, ch);
-            System.out.println(preparedStatement.toString());
+            //System.out.println(preparedStatement.toString());
             rowsAffected = preparedStatement.executeUpdate();
         }
         if (rowsAffected > 0) {
