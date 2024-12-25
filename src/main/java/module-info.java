@@ -8,6 +8,7 @@ module org.example.java_sem {
     requires spring.beans;
     requires spring.boot;
     requires spring.boot.autoconfigure;
+    requires org.slf4j;
 
 
     opens org.example.java_sem to javafx.fxml;

@@ -3,6 +3,7 @@ package org.example.java_sem;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.*;
@@ -18,15 +19,17 @@ import java.util.Base64;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.SimpleFormatter;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
-
 
 public class sr2 {
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(sr2.class);
+    private static final java.util.logging.Logger LOGGER1 = java.util.logging.Logger.getLogger(sr2.class.getName());
     @Value("${server.port}")
     private String por;
     //private ServerSocket serverSocket;
@@ -45,6 +48,14 @@ public class sr2 {
         try(ServerSocket serverSocket = new ServerSocket(port)){
             loadChatHistory();
             System.out.println("Сервер запущен. Ожидание подключения...");
+            Handler consoleHandler = new ConsoleHandler();
+            consoleHandler.setFormatter(new SimpleFormatter());
+            consoleHandler.setLevel(Level.FINE);
+            LOGGER1.addHandler(consoleHandler);
+            LOGGER1.setLevel(Level.FINE);
+            LOGGER1.log(Level.FINE,"Сервер запущен. Ожидание подключения...");
+            logger.info("eror");
+            System.out.println("a.");
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 //pool.execute();
