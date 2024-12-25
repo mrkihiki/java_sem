@@ -166,17 +166,19 @@ public class sr2 {
                 out.close();
                 clientSocket.close();
                 System.out.println("end");
+                LOGGER1.log(Level.FINE,"end");
             } catch (IOException e) {
                 try {
                     counUser--;
                     in.close();
                     out.close();
                     clientSocket.close();
-
+                    LOGGER1.log(Level.FINE,"user exit");
                 } catch (IOException ex) {
-                    System.out.println("eror");
+                    System.out.println("error");
+                    LOGGER1.log(Level.FINE,"error");
                 }
-                System.out.println("1111111");
+                //System.out.println("1111111");
             }
         }
     }
@@ -256,6 +258,7 @@ public class sr2 {
         }
         else {
             System.out.println("Логин '" + login + "' не существует.");
+            LOGGER1.log(Level.FINE,"no login");
             return false;}
     }
     private static boolean reg(String login,String pass) throws SQLException {
@@ -299,8 +302,10 @@ public class sr2 {
         }
         if (rowsAffected > 0) {
             System.out.println("Логин '" + login + "' успешно добавлен.");
+            LOGGER1.log(Level.FINE,"regist");
         } else {
             System.out.println("Не удалось добавить логин '" + login + "'.");
+            LOGGER1.log(Level.FINE,"no regist");
         }
         //Закрытие ресурсов
         try { if (resultSet != null) resultSet.close(); } catch (SQLException e) { e.printStackTrace(); }

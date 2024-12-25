@@ -136,11 +136,11 @@ public class Chat {
             inD = new DataInputStream(clientSocket.getInputStream());
         }
 
-        public String sendMessage(String msg) throws IOException {
-            out.println(msg);
-            String resp = in.readLine();
-            return resp;
-        }
+//        public String sendMessage(String msg) throws IOException {
+//            out.println(msg);
+//            String resp = in.readLine();
+//            return resp;
+//        }
 
         public void stopConnection() throws IOException {
             in.close();
