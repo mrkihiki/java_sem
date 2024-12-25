@@ -4,11 +4,11 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
+<?import javafx.scene.control.TextField?>
 <TabPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.java_sem.StartsC">
    <tabs>
       <Tab closable="false" text="Вход">
@@ -19,9 +19,9 @@
               </padding>
                <Text fx:id="logMess" strokeType="OUTSIDE" strokeWidth="0.0" />
                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Логин" />
-               <TextArea fx:id="loginLogin" prefHeight="12.0" prefWidth="193.0" />
+               <TextField fx:id="loginLogin" accessibleRole="TEXT" prefHeight="12.0" prefWidth="193.0" />
                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Пароль" />
-               <TextArea fx:id="loginPass" prefHeight="0.0" prefWidth="193.0" />
+               <TextField  fx:id="loginPass" prefHeight="0.0" prefWidth="193.0" />
               <Button onAction="#onLogin" text="Вход" />
             </VBox>
          </content>
@@ -35,9 +35,9 @@
                <children>
                   <TextFlow fx:id="regMess" prefHeight="200.0" prefWidth="200.0" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Логин" />
-                  <TextArea fx:id="regLogin" prefHeight="12.0" prefWidth="193.0" />
+                  <TextField  fx:id="regLogin" prefHeight="12.0" prefWidth="193.0" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Пароль" />
-                  <TextArea fx:id="regPass" prefHeight="0.0" prefWidth="193.0" />
+                  <TextField  fx:id="regPass" prefHeight="0.0" prefWidth="193.0" />
                   <Button onAction="#onReg" text="Зарегистрироватся" />
                </children>
             </VBox>

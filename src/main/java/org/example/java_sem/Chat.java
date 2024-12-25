@@ -6,6 +6,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
@@ -116,7 +117,9 @@ public class Chat {
         for (Message message:messageHistory){
             Text text1 =new Text(message.getUsername());
             text1.setStyle("-fx-font-weight: bold; -fx-fill: blue;");
+            text1.setFont(Font.font("Verdana", 16));
             Text text2 = new Text(message.getText()+"\n");
+            text2.setFont(Font.font("Times New Roman", 12));
             chatM.getChildren().addAll(text1, text2);
         }
     }

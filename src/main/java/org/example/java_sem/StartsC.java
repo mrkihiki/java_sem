@@ -7,11 +7,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.*;
 import java.net.Socket;
@@ -29,13 +28,13 @@ public class StartsC {
     @FXML
     private Label welcomeText;
     @FXML
-    private TextArea loginLogin;
+    private TextField  loginLogin;
     @FXML
-    protected TextArea loginPass;
+    protected TextField  loginPass;
     @FXML
-    private TextArea regLogin;
+    private TextField regLogin;
     @FXML
-    protected TextArea regPass;
+    protected TextField  regPass;
     String name="eror";
     @FXML
     protected void onHelloButtonClick() {
